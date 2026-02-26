@@ -1,0 +1,1 @@
+invoke-command -ComputerName "DEFRAAS033", "FIHELAS128", "NLAMSAS160", "NLAMSAS194", "SESTOAS661", "SESTOAS662", "SESTOAS675", "SESTOAS676" -ScriptBlock {Restart-Service -Name "SQLSentryServer" -Force -ErrorAction Stop}
