@@ -5,7 +5,7 @@
 
 # get-dbainstanceproperty -SqlInstance sestods050.sweco.se\swsql02d 
 
-$SqlInstanceCmdb = "SESTODS039.sweco.se\SWSQL16P"
+$SqlInstanceCmdb = "SWSQL16P.sql.sweco.se"
 $Database = "CMDB"
 
 
@@ -54,8 +54,9 @@ $result = $a | ForEach-Object {
     }
 }
 
-$result | Export-Excel -Path C:\Temp\Certs_202601.xlsx
+$result | Export-Excel -Path C:\Temp\Certs_202606.xlsx
 $result | Measure-Object 
+$result | Out-GridView
 # $Cmd = @"
 # SELECT
 # 	i.SqlInstance,

@@ -1,0 +1,70 @@
+
+--Create master key
+USE master;
+GO
+CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'ayJdTykgRFw7YOlUP3Ns';
+Go
+
+--create Certificate
+USE master;
+go
+OPEN MASTER KEY DECRYPTION BY PASSWORD = 'ayJdTykgRFw7YOlUP3Ns';
+go
+CREATE CERTIFICATE [CMDB_ORACLE_CERT] WITH SUBJECT = 'CERT CMDB_ORACLE';
+go
+
+--DROP CERTIFICATE [CMDB_ORACLE_CERT] 
+
+--Create database encryption key
+USE [CMDB_ORACLE];
+GO
+CREATE DATABASE ENCRYPTION KEY
+WITH ALGORITHM = AES_256
+ENCRYPTION BY SERVER CERTIFICATE [CMDB_ORACLE_CERT];
+GO
+
+--Activate encryption on database
+ALTER DATABASE [CMDB_ORACLE]
+SET ENCRYPTION ON;
+GO
+
+--Backup Service Master Key
+USE master;
+GO
+BACKUP SERVICE MASTER KEY TO FILE = '\\sweco.se\sw\IT\Backup\SQL\Encryption\SESTODS907$SESQL18T\service_master_key'
+    ENCRYPTION BY PASSWORD = 'AiYGOhUSnv64WugJKzHZ';
+GO
+
+--Backup Master Key
+USE master;   
+GO  
+OPEN MASTER KEY DECRYPTION BY PASSWORD = 'ayJdTykgRFw7YOlUP3Ns';   
+
+BACKUP MASTER KEY TO FILE = '\\sweco.se\sw\IT\Backup\SQL\Encryption\SESTODS907$SESQL18T\exportedmasterkey'
+    ENCRYPTION BY PASSWORD = 'ayZXMzgWKrNvhq1fCILZ';   
+GO
+
+--Backup Certificate
+BACKUP CERTIFICATE [CMDB_ORACLE_CERT]
+TO FILE ='\\sweco.se\sw\IT\Backup\SQL\Encryption\SESTODS907$SESQL18T\CMDB_ORACLE_CERT.cert'
+WITH PRIVATE KEY(
+FILE = '\\sweco.se\sw\IT\Backup\SQL\Encryption\SESTODS907$SESQL18T\CMDB_ORACLE_CERT.prvk',
+ENCRYPTION BY PASSWORD = '2cm10TfpdyBCEkO0a274'
+);
+
+--Restore database cert from other server
+USE master;
+go
+OPEN MASTER KEY DECRYPTION BY PASSWORD = 'ayJdTykgRFw7YOlUP3Ns'
+go
+CREATE CERTIFICATE CMDB_CERT   
+    FROM FILE = '\\sweco.se\sw\IT\Backup\SQL\Encryption\SESTODS061$SWSQL14T\certCMDB.cer'   
+    WITH PRIVATE KEY (FILE = '\\sweco.se\sw\IT\Backup\SQL\Encryption\SESTODS061$SWSQL14T\certCMDB.prv',   
+    DECRYPTION BY PASSWORD = 'P5vO2Pe9ksdNoFQR1ivI');  
+GO
+
+--Restore database from other server
+DROP CERTIFICATE CMDB_CERT 
+
+
+

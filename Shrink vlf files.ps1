@@ -17,15 +17,15 @@
 #
 ###########################################################################
 
-$SqlInstance = "SESTODS052.sweco.se\SWSQL28P"
+$SqlInstance = "SEDCXDS010.sweco.se\SWSCOM03P"
 
 #Which databases have a lot of VLf files.
 Measure-DbaDbVirtualLogFile -SqlInstance $SqlInstance | Where-Object {$psitem.Total -gt 100}
 ##################### 
 
-
+Measure-DbaDbVirtualLogFile -SqlInstance $SqlInstance -Database $Database
 #Make a list of databases with high vlf:s
-$Database = "GLOBAL_macoprod", "pw_fut_2023", "pw_sweco_2023", "pw_sweco_2023_new" #, "PFE_Client_Health"#,"swecocoreexpo", "SwecoIntranetStaging_Copy", "TravelExpense", "travelexpense_prodtest", "tre", "tre_sandbox", "webbeko"
+$Database = "OperationsManager"#, "projectmember", "swecoaccess", "SwecoApi", "tre", "webbeko"
 
 ##################### 
 #Get file sizes and autogrowth settings
@@ -48,11 +48,11 @@ Start-DbaAgentJob -SqlInstance $SqlInstance -Job "DatabaseBackup - USER_DATABASE
 
 #Example for growth rate 512MB
 #First growth
-$TargetSize = 8192 #Size in Mb
-$IncrementSize = 8192 
+$TargetSize = 16514 #Size in Mb
+$IncrementSize = 16384 
 #Continous growth
 $TargetSize = 32768 #Size in Mb
-$IncrementSize = 512 
+$IncrementSize = 1024 
 
 #Example for growth rate 1024MB
 #First growth
@@ -64,7 +64,7 @@ $TargetSize = 16384 #Size in Mb
 $IncrementSize = 1024 
 
 $TargetSize = 49152 #Size in Mb
-$IncrementSize = 1048576 
+$IncrementSize = 1024 
 
 #Set database name again. The databases for which the growth settings above is applicable.
 #$Database = "MyDatabase1", "MyDatabase2", "MyDatabase3"

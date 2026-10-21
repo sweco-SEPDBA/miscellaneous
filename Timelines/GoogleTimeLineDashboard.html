@@ -1,0 +1,186 @@
+﻿<html>
+<head>
+<title>Sql Server Agent jobs timeline</title>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,700,300' rel='stylesheet' type='text/css'>
+<style>       
+    html {
+        background: #263238;
+        color: #607d8b;
+        font-size: 1.1em;
+        line-height: 1.4;
+        font-family: "Roboto";
+        font-weight: 100;
+    }
+    #chart {
+        background: #637077;
+        padding: 20px;
+    }
+</style>
+</head>
+<body>
+<div class="block">
+  <div class="container">
+    <div class="span4">
+        <div id="chart"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+var options = {
+    series: [
+        {
+            name: 'SESTODS070\\SWSQL42P - CommandLog Cleanup',
+            data: [{
+                x: 'CommandLog Cleanup',
+                y: [new Date('2026-04-19 01:34:11').getTime(), new Date('2026-04-19 01:34:15').getTime()]
+            }]
+        },
+        {
+            name: 'SESTODS070\\SWSQL42P - Cycle Sql Error Log',
+            data: [{
+                x: 'Cycle Sql Error Log',
+                y: [new Date('2026-04-19 03:12:17').getTime(), new Date('2026-04-19 03:12:18').getTime()]
+            }]
+        },
+        {
+            name: 'SESTODS070\\SWSQL42P - DatabaseBackup - SYSTEM_DATABASES - FULL',
+            data: [{
+                x: 'DatabaseBackup - SYSTEM_DATABASES - FULL',
+                y: [new Date('2026-04-19 18:34:12').getTime(), new Date('2026-04-19 18:34:23').getTime()]
+            }]
+        },
+        {
+            name: 'SESTODS070\\SWSQL42P - DatabaseBackup - USER_DATABASES - DIFF',
+            data: [{
+                x: 'DatabaseBackup - USER_DATABASES - DIFF',
+                y: [new Date('2026-04-19 21:31:13').getTime(), new Date('2026-04-19 21:33:43').getTime()]
+            }]
+        },
+        {
+            name: 'SESTODS070\\SWSQL42P - DatabaseIntegrityCheck - SYSTEM_DATABASES',
+            data: [{
+                x: 'DatabaseIntegrityCheck - SYSTEM_DATABASES',
+                y: [new Date('2026-04-19 04:35:16').getTime(), new Date('2026-04-19 04:35:38').getTime()]
+            }]
+        },
+        {
+            name: 'SESTODS070\\SWSQL42P - DatabaseIntegrityCheck - USER_DATABASES',
+            data: [{
+                x: 'DatabaseIntegrityCheck - USER_DATABASES',
+                y: [new Date('2026-04-19 05:45:17').getTime(), new Date('2026-04-19 21:12:49').getTime()]
+            }]
+        },
+        {
+            name: 'SESTODS070\\SWSQL42P - IndexOptimize - USER_DATABASES',
+            data: [{
+                x: 'IndexOptimize - USER_DATABASES',
+                y: [new Date('2026-04-19 01:23:18').getTime(), new Date('2026-04-19 02:03:15').getTime()]
+            }]
+        },
+        {
+            name: 'SESTODS070\\SWSQL42P - Output File Cleanup',
+            data: [{
+                x: 'Output File Cleanup',
+                y: [new Date('2026-04-19 01:39:18').getTime(), new Date('2026-04-19 01:40:52').getTime()]
+            }]
+        },
+        {
+            name: 'SESTODS070\\SWSQL42P - sp_delete_backuphistory',
+            data: [{
+                x: 'sp_delete_backuphistory',
+                y: [new Date('2026-04-19 01:44:20').getTime(), new Date('2026-04-19 01:44:50').getTime()]
+            }]
+        },
+        {
+            name: 'SESTODS070\\SWSQL42P - syspolicy_purge_history',
+            data: [{
+                x: 'syspolicy_purge_history',
+                y: [new Date('2026-04-19 02:00:01').getTime(), new Date('2026-04-19 02:00:04').getTime()]
+            }]
+        }
+    ],
+    chart: {
+        height: 600,
+        type: 'rangeBar',
+        background: 'transparent',
+        toolbar: {
+            show: true,
+            tools: {
+                zoom: true,
+                zoomin: true,
+                zoomout: true,
+                pan: true,
+                reset: true
+            }
+        }
+    },
+    plotOptions: {
+        bar: {
+            horizontal: true,
+            barHeight: '50%',
+            rangeBarGroupRows: false
+        }
+    },
+    colors: ["#3f51b5","#2196f3","#03a9f4","#00bcd4","#009688","#4caf50","#8bc34a","#cddc39"],
+    fill: {
+        type: 'solid'
+    },
+    xaxis: {
+        type: 'datetime',
+        labels: {
+            style: {
+                colors: '#ff0000',  // HÄR ändrar du färgen på x-axelns text!
+                fontSize: '12px',
+                fontFamily: 'Roboto',
+                fontWeight: 'bold'
+            },
+            datetimeFormatter: {
+                year: 'yyyy',
+                month: 'MMM \'yy',
+                day: 'dd MMM',
+                hour: 'HH:mm'
+            }
+        },
+        axisBorder: {
+            color: '#434b4e'
+        },
+        axisTicks: {
+            color: '#434b4e'
+        }
+    },
+    yaxis: {
+        labels: {
+            style: {
+                colors: '#b0bec5',
+                fontSize: '9px',
+                fontFamily: 'Roboto',
+                fontWeight: 'bold'
+            }
+        }
+    },
+    grid: {
+        borderColor: '#434b4e',
+        xaxis: {
+            lines: {
+                show: true
+            }
+        }
+    },
+    tooltip: {
+        theme: 'dark',
+        x: {
+            format: 'dd MMM yyyy HH:mm:ss'
+        }
+    },
+    legend: {
+        show: false
+    }
+};
+
+var chart = new ApexCharts(document.querySelector("#chart"), options);
+chart.render();
+</script>
+</body>
+</html>

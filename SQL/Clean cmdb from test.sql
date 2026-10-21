@@ -1,0 +1,41 @@
+SELECT
+	*
+--BEGIN TRANSACTION
+--DELETE Instance
+--DELETE InstanceChanges
+FROM
+	Server s
+	INNER JOIN Instance i ON i.ServerId = s.ServerId
+--	INNER JOIN InstanceChanges ic ON ic.InstanceId = i.InstanceId
+WHERE
+	s.FQDN = 'SESTODS061.sweco.se'
+--ROLLBACK
+BEGIN TRANSACTION
+DELETE Instance
+WHERE 
+	InstanceId IN (1512,1513)
+ROLLBACK
+
+
+BEGIN TRANSACTION
+DELETE InstanceChanges
+WHERE 
+	InstanceId IN (1501, 1502, 1505, 1506, 1507, 1509, 1510, 1511)
+ROLLBACK
+
+SELECT *
+BEGIN TRANSACTION
+DELETE InstanceContacts
+FROM 
+	Instance i
+	INNER JOIN InstanceContacts ic ON ic.InstanceId = i.InstanceId
+WHERE 
+	i.InstanceId IN (1501, 1502, 1505, 1506, 1507, 1509, 1510, 1511)
+ROLLBACK
+
+
+BEGIN TRANSACTION
+DELETE Server
+WHERE 
+	FQDN = 'SESTODS061'
+ROLLBACK

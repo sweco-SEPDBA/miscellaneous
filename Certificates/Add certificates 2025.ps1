@@ -42,7 +42,7 @@ Function Update-Certificate {
 
 # Run below if you want to suppress the progress bar
 #$ProgressPreference = 'SilentlyContinue'
-
+Update-Certificate -fqdn SEDCXDS010.sweco.se -INSTANCE SWSCOM03P 
 
 # This is for Jesper
 # ComputerName	InstanceName	ForceEncryption	FriendlyName	DnsNameList

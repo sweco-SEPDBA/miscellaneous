@@ -1,0 +1,8 @@
+
+BACKUP CERTIFICATE [CMDB CERT]
+TO FILE ='\\sweco.se\sw\IT\Backup\SQL\Encryption\SESTODS061$SWSQL14T\CMDB_Cert.cert'
+WITH PRIVATE KEY(
+FILE = '\\sweco.se\sw\IT\Backup\SQL\Encryption\SESTODS061$SWSQL14T\CMDB_Cert.prvk',
+ENCRYPTION BY PASSWORD = 'P5vO2Pe9ksdNoFQR1ivI'
+);
+

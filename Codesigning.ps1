@@ -1,3 +1,22 @@
+<#
+Prepare code signing
+
+# Install the PS modules
+Install-Module Microsoft.PowerShell.SecretManagement -Scope CurrentUser
+Install-Module Microsoft.PowerShell.SecretStore -Scope CurrentUser
+
+# Create the local vault
+Register-SecretVault -Name SecretStore -ModuleName Microsoft.PowerShell.SecretStore -DefaultVault
+
+# Set a password for vault access (This is the users own password which will be used when the script is run to access the local vault)
+Get-SecretStoreConfiguration
+
+# Store the client secret in the vault:
+Set-Secret -Name "SwecoIT-Codesign-SwecoCA" -Secret "[Secret]"
+
+
+#>
+
 param (
     [Parameter(Mandatory = $true,HelpMessage="Enter full filename of file to sign")]
     $File
